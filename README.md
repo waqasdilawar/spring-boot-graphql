@@ -1,4 +1,4 @@
-# GraphQL with Spring Boot
+# GraphQL with Spring Boot - [Demo URL](https://still-shore-79504.herokuapp.com/graphiql)
 
 ### Available Operations
 Following operations are available:
