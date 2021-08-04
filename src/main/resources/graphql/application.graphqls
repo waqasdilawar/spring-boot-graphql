@@ -18,4 +18,5 @@ type Mutation {
 
 type Subscription {
     getRandomValue(symbol: String): Boolean!
+    getMessages(myMessage: String): String!
 }
