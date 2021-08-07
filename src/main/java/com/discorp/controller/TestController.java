@@ -5,10 +5,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.kafka.receiver.KafkaReceiver;
 import reactor.kafka.receiver.ReceiverOptions;
@@ -28,6 +26,19 @@ public class TestController
 {
     @Autowired
     KafkaReceiver<String,String> kafkaReceiver;
+
+    private final KafkaTemplate<Integer, String> template;
+
+    public TestController(KafkaTemplate<Integer, String> template)
+    {
+        this.template = template;
+    }
+
+
+    @PostMapping
+    public void send( @RequestParam String toSend) {
+        this.template.send("test_gql", toSend);
+    }
 
     @GetMapping(value = "/events", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Boolean> getProductEvents() {
